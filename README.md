@@ -1,18 +1,21 @@
 1. Bùi Ngọc
-- [x]login
-- [x]users
-- [ ]course
+
+- [X]login
+- [X]users
+- [X]course
 - [ ]course_user
 
-2.
+2. Tien Tran
+
 - lessons
 - materials
 
 3. Chu Bích
+
 - quizzes
 - questions
 
 4.
+
 - options
 - dashboard page
-
