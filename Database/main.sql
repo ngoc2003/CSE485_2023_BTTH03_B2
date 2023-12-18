@@ -84,3 +84,12 @@ CREATE TABLE options (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (question_id) REFERENCES questions(id)
 );
+
+-- Thêm trigger khi xóa course
+CREATE TRIGGER before_delete_course
+BEFORE DELETE ON courses
+FOR EACH ROW
+BEGIN
+    DELETE FROM course_user
+    WHERE course_id = OLD.id;
+END;

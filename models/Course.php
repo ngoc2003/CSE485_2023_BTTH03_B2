@@ -1,4 +1,5 @@
 <?php
+require_once 'config.php';
 
 class Course {
     private $id;
@@ -46,6 +47,8 @@ class Course {
     {
         $query = $this->db->prepare('DELETE FROM courses WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
+
+        
         $query->execute();
     }
 
