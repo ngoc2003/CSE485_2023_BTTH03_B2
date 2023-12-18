@@ -1,7 +1,7 @@
--- Insert sample data into the 'users' table
+-- Insert sample data into the 'users' table -- admin123
 INSERT INTO users (name, email, password) VALUES
-    ('John Doe', 'john.doe@example.com', 'password123'),
-    ('Jane Smith', 'jane.smith@example.com', 'securepassword');
+    ('John Doe', 'john.doe@example.com', '$2y$10$N/ibOJm38SgqPjmLaPTEi.k9B8wn.NJblWaM1.5brx/EftkiBpICO'),
+    ('Jane Smith', 'jane.smith@example.com', '$2y$10$N/ibOJm38SgqPjmLaPTEi.k9B8wn.NJblWaM1.5brx/EftkiBpICO');
 
 -- Insert sample data into the 'courses' table
 INSERT INTO courses (title, description) VALUES
