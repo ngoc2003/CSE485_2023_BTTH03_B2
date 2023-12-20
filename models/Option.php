@@ -155,5 +155,17 @@ Class Option{
 
         return $this;
     }
+
+    /**
+     * Set the value of is_correct
+     *
+     * @return  self
+     */ 
+    public function setIs_correct($is_correct)
+    {
+        $this->is_correct = $is_correct;
+
+        return $this;
+    }
 }
 ?>
