@@ -3,26 +3,30 @@ require_once 'models/Lesson.php';
 require_once 'models/Material.php';
 
 
-class MaterialController {
-    public function index() {
+class MaterialController
+{
+    public function index()
+    {
         $id = $_GET['lessonId'];
         $object = new Material();
         $object->setLessonId($id);
         $materialList = $object->getAllMaterialByLessonId();
-        
+
         require 'views/material/index.php';
     }
-    
-    public function create() {
+
+    public function create()
+    {
         $lessonId = $_GET['lessonId'];
         require 'views/material/create.php';
     }
 
-    public function store() {
+    public function store()
+    {
         if (
             isset($_POST["lessonId"]) &&
             isset($_POST["title"]) &&
-            isset($_POST["filePath"]) 
+            isset($_POST["filePath"])
         ) {
 
             $material = new Material();
@@ -36,7 +40,8 @@ class MaterialController {
         }
     }
 
-    public function edit() {
+    public function edit()
+    {
         $id = $_GET['id'];
         $lessonId = $_GET['lessonId'];
 
@@ -47,11 +52,12 @@ class MaterialController {
         require 'views/material/update.php';
     }
 
-    public function save() {
+    public function save()
+    {
         if (
             isset($_POST["id"]) &&
             isset($_POST["title"]) &&
-            isset($_POST["filePath"]) 
+            isset($_POST["filePath"])
         ) {
 
             $material = new Material();
@@ -76,6 +82,4 @@ class MaterialController {
 
         header('Location: index.php?controller=material&action=index&lessonId=' . $lessonId);
     }
-
 }
-?>
