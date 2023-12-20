@@ -33,14 +33,11 @@ class CourseController {
             $course->store();
 
             header('location: index.php?controller=course&action=index');
-        }else {
-            echo "NONO";
         }
     }
     
     public function create() {
         require 'views/course/create.php';
-        
     }
 
     public function showCourseDetails($courseId) {

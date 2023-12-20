@@ -7,8 +7,8 @@
 
 2. Tien Tran
 
-- [ ] lessons
-- [ ] materials
+- [x] lessons
+- [x] materials
 
 3. Chu Bích
 
