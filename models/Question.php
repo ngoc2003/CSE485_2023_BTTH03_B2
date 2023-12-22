@@ -16,6 +16,13 @@ class Question
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function getAllQuestions() {
+        $query = $this->db->prepare('SELECT * FROM questions');
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function store()
     {
         $query = $this->db->prepare('INSERT INTO questions (quiz_id, question) VALUES (:quiz_id, :question)');
