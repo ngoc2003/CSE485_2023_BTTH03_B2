@@ -1,4 +1,5 @@
 <?php
+require_once 'config.php';
 Class Option{
     private $id;
     private $question_id;
@@ -8,38 +9,52 @@ Class Option{
     private $updated_at;
 
     private $db;
+
     public function __construct(){
         $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
+    
     public function getAllOption() {
         $query = $this->db->query('select * from options');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function save() {
-        $query = $this->db->prepare('Update option set question_id = :question_id, option = :option , is_correct =: is_corect where id =:id');
-        $query->bindParam(':question_id', $this->question_id, PDO::PARAM_STR);
+        $query = $this->db->prepare('UPDATE options SET `option` = :option, is_correct = :iscorrect WHERE id = :id');
         $query->bindParam(':option', $this->option, PDO::PARAM_STR);
-        $query->bindParam(':is_correct', $this->is_correct,PDO ::PARAM_BOOL);
+        $query->bindParam(':iscorrect', $this->is_correct, PDO::PARAM_INT);
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
+    
         $query->execute();
     }
-    public function getOptionById($OptionId) {
+
+    public function getOptionById() {
         $query = $this->db->prepare('SELECT * FROM options WHERE id = :id');
-        $query->bindParam(':id',$optionId, PDO::PARAM_INT);
+        $query->bindParam(':id',$this->id, PDO::PARAM_INT);
         $query->execute();
 
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
     public function store() {
-        $query = $this->db->prepare('INSERT INTO options (question_id,option,is_correct) VALUES (:question_id;:option;:is_correct)');
-        $query->bindParam(':question_id', $this->question_id, PDO::PARAM_STR);
-        $query->bindParam(':option', $this->option, PDO::PARAM_STR);
-        $query->bindParam(':is_correct', $this->is_correct,PDO ::PARAM_BOOL);
-        $query->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $query->execute();
+        try {
+            $query = $this->db->prepare("INSERT INTO options (question_id, `option`, is_correct) VALUES (:questionid, :option, :iscorrect)");
+    
+            $query->bindParam(':questionid', $this->question_id, PDO::PARAM_INT);
+            $query->bindParam(':option', $this->option, PDO::PARAM_STR);
+            $query->bindParam(':iscorrect', $this->is_correct, PDO::PARAM_INT);
+    
+            if ($query->execute()) {
+                echo "Data inserted successfully!";
+            } else {
+                echo "Error executing query";
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
+    
 
     public function delete()
     {
@@ -64,8 +79,6 @@ Class Option{
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -84,8 +97,6 @@ Class Option{
     public function setQuestion_id($question_id)
     {
         $this->question_id = $question_id;
-
-        return $this;
     }
 
     /**
@@ -104,8 +115,6 @@ Class Option{
     public function setOption($option)
     {
         $this->option = $option;
-
-        return $this;
     }
 
     /**
@@ -132,8 +141,6 @@ Class Option{
     public function setCreated_at($created_at)
     {
         $this->created_at = $created_at;
-
-        return $this;
     }
 
     /**
@@ -164,8 +171,6 @@ Class Option{
     public function setIs_correct($is_correct)
     {
         $this->is_correct = $is_correct;
-
-        return $this;
     }
 }
 ?>
