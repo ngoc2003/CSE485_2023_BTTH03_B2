@@ -17,5 +17,5 @@
 
 4. Nga
 
-- [ ] options
-- [ ] dashboard page
+- [x] options
+- [x] dashboard page
