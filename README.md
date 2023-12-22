@@ -12,8 +12,8 @@
 
 3. Chu Bích
 
-- [ ] quizzes
-- [ ] questions
+- [x] quizzes
+- [x] questions
 
 4. Nga
 
