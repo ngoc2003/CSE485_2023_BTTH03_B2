@@ -1,14 +1,14 @@
 <?php
 require_once 'models/Question.php';
-require_once 'models/Quiz.php';
 
 class QuestionController
 {
     public function index()
     {
-        $quizId = $_GET['quizId'];
+        $quizzId = $_GET['quizzId'];
         $object = new Question();
-        $object->setQuizId($quizId);
+        $object->setQuizId($quizzId);
+
         $questionList = $object->getAllQuestionsByQuizId();
 
         require 'views/question/index.php';
@@ -16,31 +16,32 @@ class QuestionController
 
     public function create()
     {
-        $quizId = $_GET['quizId'];
+        $quizzId = $_GET['quizzId'];
+
         require 'views/question/create.php';
     }
 
     public function store()
     {
         if (
-            isset($_POST["quizId"]) &&
+            isset($_POST["quizzId"]) &&
             isset($_POST["question"])
         ) {
 
             $question = new Question();
-            $question->setQuizId($_POST["quizId"]);
+            $question->setQuizId($_POST["quizzId"]);
             $question->setQuestion($_POST["question"]);
 
             $question->store();
 
-            header('Location: index.php?controller=question&action=index&quizId=' . $_POST["quizId"]);
+            header('Location: index.php?controller=question&action=index&quizzId=' . $_POST["quizzId"]);
         }
     }
 
-    public function edit()
+    public function update()
     {
         $id = $_GET['id'];
-        $quizId = $_GET['quizId'];
+        $quizzId = $_GET['quizzId'];
 
         $object = new Question();
         $object->setId($id);
@@ -53,18 +54,17 @@ class QuestionController
     {
         if (
             isset($_POST["id"]) &&
-            isset($_POST["quizId"]) &&
+            isset($_POST["quizzId"]) &&
             isset($_POST["question"])
         ) {
 
             $question = new Question();
             $question->setId($_POST["id"]);
-            $question->setQuizId($_POST["quizId"]);
             $question->setQuestion($_POST["question"]);
 
-            $question->save();
+            $question->update();
 
-            header('Location: index.php?controller=question&action=index&quizId=' . $_POST["quizId"]);
+            header('Location: index.php?controller=question&action=index&quizzId=' . $_POST["quizzId"]);
         }
     }
 
@@ -72,12 +72,12 @@ class QuestionController
     public function delete()
     {
         $id = $_GET['id'];
-        $quizId = $_GET['quizId'];
+        $quizzId = $_GET['quizzId'];
         $question = new Question();
 
         $question->setId($id);
         $question->delete();
 
-        header('Location: index.php?controller=question&action=index&quizId=' . $quizId);
+        header('Location: index.php?controller=question&action=index&quizzId=' . $quizzId);
     }
 }

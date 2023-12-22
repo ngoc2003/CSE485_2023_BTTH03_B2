@@ -8,14 +8,17 @@ class QuizzController
     {
 
         $quizzModel = new Quizz();
-        $quizzList = $quizzModel->getAllQuizzes();
+        $quizzes = $quizzModel->getAllQuizzes();
 
         require 'views/quizz/index.php';
     }
 
     public function create()
     {
-        $lessonId = $_GET['lesson_id'];
+        $object = new Lesson();
+
+        $lessonList = $object->getAllLesson();
+
         require 'views/quizz/create.php';
     }
 
@@ -24,12 +27,12 @@ class QuizzController
         if (
             isset($_POST["lessonId"]) &&
             isset($_POST["title"]) &&
-            isset($_POST["description"])
+            isset($_POST["id"])
         ) {
             $quizz = new Quizz();
-            $quizz->setLesson_id($_POST["lessonId"]);
+            $quizz->setLessonId($_POST["lessonId"]);
             $quizz->setTitle($_POST["title"]);
-            $quizz->setDescription($_POST["description"]);
+            $quizz->setId($_POST["id"]);
 
             $quizz->store();
 
@@ -41,8 +44,14 @@ class QuizzController
     {
 
         $id = $_GET['id'];
-        $quizz = new Quizz();
-        $quizz->setId($id);
+        $object = new Quizz();
+        $object->setId($id);
+
+        $quizz = $object->getQuizzById();
+
+        $object = new Lesson();
+
+        $lessonList = $object->getAllLesson();
 
         require 'views/quizz/update.php';
     }
@@ -52,15 +61,15 @@ class QuizzController
         if (
             isset($_POST["title"]) &&
             isset($_POST["id"]) &&
-            isset($_POST["description"])
+            isset($_POST["lessonId"])
         ) {
             $quizz = new Quizz();
+
             $quizz->setId($_POST["id"]);
             $quizz->setTitle($_POST["title"]);
-            $quizz->setDescription($_POST["description"]);
-
+            $quizz->setLessonId($_POST["lessonId"]);
+            
             $quizz->update();
-
             header("Location: index.php?controller=quizz&action=index");
         }
     }

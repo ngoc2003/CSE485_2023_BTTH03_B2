@@ -6,7 +6,6 @@ class Quizz
     private $id;
     private $lesson_id;
     private $title;
-    private $description;
     private $created_at;
     private $updated_at;
     private $db;
@@ -19,10 +18,9 @@ class Quizz
 
     public function store()
     {
-        $query = $this->db->prepare('INSERT INTO quizzes (lesson_id, title, description) VALUES (:lesson_id, :title, :description)');
+        $query = $this->db->prepare('INSERT INTO quizzes (lesson_id, title) VALUES (:lesson_id, :title)');
         $query->bindParam(':lesson_id', $this->lesson_id, PDO::PARAM_INT);
         $query->bindParam(':title', $this->title, PDO::PARAM_STR);
-        $query->bindParam(':description', $this->description, PDO::PARAM_STR);
         $query->execute();
     }
 
@@ -34,10 +32,11 @@ class Quizz
 
     public function update()
     {
-        $query = $this->db->prepare('UPDATE quizzes SET title = :title, description = :description WHERE id = :id');
+        $query = $this->db->prepare('UPDATE quizzes SET title = :title, lesson_id = :lessonId WHERE id = :id');
         $query->bindParam(':title', $this->title, PDO::PARAM_STR);
-        $query->bindParam(':description', $this->description, PDO::PARAM_STR);
+        $query->bindParam(':lessonId', $this->lesson_id, PDO::PARAM_INT);
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
+
         $query->execute();
     }
 
@@ -48,12 +47,20 @@ class Quizz
         $query->execute();
     }
 
+    public function getQuizzById() {
+        $query = $this->db->prepare('SELECT * FROM quizzes WHERE id = :id');
+        $query->bindParam(':id',$this->id, PDO::PARAM_INT);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
 
     public function setId($id)
     {
         $this->id = $id;
     }
-    public function setCourseId($id)
+    public function setLessonId($id)
     {
         $this->lesson_id = $id;
     }
@@ -61,31 +68,17 @@ class Quizz
     {
         $this->title = $title;
     }
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
+    
     public function getId()
     {
         return $this->id;
     }
-    public function getLesson_id()
+    public function getLessonId()
     {
         return $this->lesson_id;
     }
     public function getTitle()
     {
         return $this->title;
-    }
-    public function getDescription()
-    {
-        return $this->description;
-    }
-    public function setLesson_id($lesson_id)
-    {
-        $this->lesson_id = $lesson_id;
-
-        return $this;
     }
 }
